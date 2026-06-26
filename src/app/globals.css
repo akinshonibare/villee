@@ -1,26 +1,84 @@
 @import "tailwindcss";
 
+@theme {
+  --color-cream: #f4ecdb;
+  --color-cream-soft: #faf5e9;
+  --color-ink: #1a1410;
+  --color-ink-soft: #4a3f33;
+  --color-rust: #c14a1f;
+  --color-rust-deep: #8f3614;
+  --color-forest: #2a4a2a;
+  --color-ochre: #d4a437;
+  --color-blush: #e8c4b3;
+  --color-plum: #5a2840;
+
+  --font-display: var(--font-fraunces);
+  --font-sans: var(--font-inter);
+  --font-script: var(--font-caveat);
+}
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: var(--color-cream);
+  --foreground: var(--color-ink);
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 4rem; /* keeps anchored sections clear of the sticky 56px nav */
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--color-cream);
+  color: var(--color-ink);
+  font-family: var(--font-inter), system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* warm paper grain — subtle SVG noise */
+.grain {
+  position: relative;
+  isolation: isolate;
+}
+.grain::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.35;
+  mix-blend-mode: multiply;
+  background-image: url("data:image/svg+xml;utf8,<svg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.1 0 0 0 0 0.08 0 0 0 0 0.06 0 0 0 0.35 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+  background-size: 180px;
+  z-index: 10;
+}
+
+.display {
+  font-family: var(--font-fraunces), serif;
+  font-variation-settings: "SOFT" 50, "opsz" 144;
+  letter-spacing: -0.02em;
+}
+.display-italic {
+  font-family: var(--font-fraunces), serif;
+  font-style: italic;
+  font-variation-settings: "SOFT" 100, "WONK" 1, "opsz" 144;
+  letter-spacing: -0.01em;
+}
+.script {
+  font-family: var(--font-caveat), cursive;
+}
+
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+.marquee-track {
+  animation: marquee 40s linear infinite;
+}
+
+::selection {
+  background: var(--color-rust);
+  color: var(--color-cream);
 }
