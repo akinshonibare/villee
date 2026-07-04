@@ -3,6 +3,12 @@
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 
+// One tile swaps per tick — a swap every ~1.1s keeps the wall constantly
+// moving while each individual crossfade still gets room to breathe.
+const SWAP_INTERVAL_MS = 1100;
+// Don't re-swap a tile that's still crossfading from its last swap.
+const SWAP_COOLDOWN_TILES = 6;
+
 // Faded patchwork of real event photos behind the landing hero,
 // washed out under cream so the type stays readable (blind8-style).
 // 24 tiles drawn from 33 photos — no photo appears twice at once;
@@ -60,20 +66,39 @@ export function CollageBackdrop() {
     return () => clearTimeout(t);
   }, []);
 
+  const recentlySwapped = useRef<number[]>([]);
+
   useEffect(() => {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
     const id = setInterval(() => {
       setTiles((prev) => {
-        const shown = new Set(prev.map((t) => t.src));
-        const bench = PHOTOS.filter((p) => !shown.has(p));
+        // Drop finished crossfade layers (anything outside the cooldown
+        // window is done fading) so their photos return to the bench.
+        const next = prev.map((t, idx) =>
+          t.prevSrc && !recentlySwapped.current.includes(idx)
+            ? { ...t, prevSrc: null }
+            : t,
+        );
+        // A photo is out of play while visible OR still fading out —
+        // otherwise it could appear in two tiles at once mid-fade.
+        const inPlay = new Set(
+          next.flatMap((t) => (t.prevSrc ? [t.src, t.prevSrc] : [t.src])),
+        );
+        const bench = PHOTOS.filter((p) => !inPlay.has(p));
         if (bench.length === 0) return prev;
-        const tileIndex = Math.floor(Math.random() * prev.length);
+        let tileIndex = Math.floor(Math.random() * next.length);
+        while (recentlySwapped.current.includes(tileIndex)) {
+          tileIndex = Math.floor(Math.random() * next.length);
+        }
+        recentlySwapped.current = [
+          ...recentlySwapped.current.slice(1 - SWAP_COOLDOWN_TILES),
+          tileIndex,
+        ];
         const incoming = bench[Math.floor(Math.random() * bench.length)];
-        const next = [...prev];
-        next[tileIndex] = { src: incoming, prevSrc: prev[tileIndex].src };
+        next[tileIndex] = { src: incoming, prevSrc: next[tileIndex].src };
         return next;
       });
-    }, 2800);
+    }, SWAP_INTERVAL_MS);
     return () => clearInterval(id);
   }, []);
 
