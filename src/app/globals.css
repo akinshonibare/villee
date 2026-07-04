@@ -70,6 +70,28 @@ body {
   font-family: var(--font-caveat), cursive;
 }
 
+@keyframes tile-fade {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+.tile-fade {
+  animation: tile-fade 1.2s ease both;
+}
+@media (prefers-reduced-motion: reduce) {
+  .tile-fade { animation: none; }
+}
+
+@keyframes word-swap {
+  from { opacity: 0; transform: translateY(0.35em); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.word-swap {
+  animation: word-swap 0.45s ease both;
+}
+@media (prefers-reduced-motion: reduce) {
+  .word-swap { animation: none; }
+}
+
 @keyframes marquee {
   from { transform: translateX(0); }
   to { transform: translateX(-50%); }

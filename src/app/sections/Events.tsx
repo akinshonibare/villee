@@ -1,6 +1,5 @@
+import Image from "next/image";
 import { events } from "@/content";
-
-const placeholderTints = ["bg-rust", "bg-forest", "bg-plum"];
 
 export function Events() {
   return (
@@ -23,19 +22,20 @@ export function Events() {
             key={e.title}
             className="group cursor-pointer"
           >
-            {/* photo placeholder — swap with real 4:5 image when assets arrive */}
-            <div
-              className={`relative aspect-[4/5] rounded-2xl overflow-hidden ${placeholderTints[i]} mb-4 group-hover:scale-[1.01] transition-transform`}
-            >
-              <div className="absolute inset-0 grain" />
+            <div className="relative aspect-[4/5] rounded-2xl overflow-hidden mb-4 group-hover:scale-[1.01] transition-transform">
+              <Image
+                src={e.photo}
+                alt={e.title}
+                fill
+                sizes="(max-width: 768px) 100vw, 33vw"
+                className="object-cover"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-ink/70 via-ink/10 to-transparent" />
               <div className="absolute bottom-4 left-4 right-4 text-cream">
                 <div className="text-xs uppercase tracking-widest opacity-80 mb-1">
                   {e.meta}
                 </div>
                 <div className="display text-2xl">{e.title}</div>
-              </div>
-              <div className="absolute top-4 right-4 bg-cream text-ink text-[10px] uppercase tracking-widest px-2 py-1 rounded-full">
-                photo soon
               </div>
             </div>
             <p className="text-ink-soft text-sm leading-relaxed">

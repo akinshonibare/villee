@@ -20,6 +20,26 @@ export const hero = {
   scribble: "↓ keep scrolling, it's a vibe",
 };
 
+// Blind8-style minimal landing. One screen, one message, one button.
+export const landing = {
+  navLinks: [
+    { label: "what is this", href: "/about" },
+    { label: "faq", href: "/faq" },
+    {
+      label: "partner with us",
+      href: `mailto:${CONTACT_EMAIL}?subject=Villee%20partnership`,
+    },
+  ],
+  rotatingWords: ["spontaneous", "welcoming", "real", "alive"],
+  headline: { pre: "the most", post: "community in your city." },
+  taglines: ["arrive as strangers.", "leave as the village."],
+  body: "your journey starts with one rsvp: a bbq, a dinner, a run club — you and the people you've been meaning to meet. after that, the group chat is yours.",
+  curated: "curated by real people. not an algorithm.",
+  cheer: "cheers to leaving the house!",
+  cta: { label: "become a founding member", href: SIGNUP_URL },
+  secondary: { label: "already in the village? find us on instagram", href: IG_URL },
+} as const;
+
 export const marqueeWords = [
   "bbqs",
   "dinners",
@@ -98,16 +118,19 @@ export const events = {
       title: "summer bbq vol. 02",
       meta: "toronto · jun",
       caption: "120 people, one park, zero strangers by sundown.",
+      photo: "/collage/villee-17.jpg",
     },
     {
       title: "sunday supper",
       meta: "toronto · may",
       caption: "a long table, candles, and a shared playlist.",
+      photo: "/collage/villee-01.jpg",
     },
     {
       title: "first run club",
       meta: "toronto · apr",
       caption: "5k, then coffee, then breakfast that lasted three hours.",
+      photo: "/collage/villee-28.jpg",
     },
   ],
   next: {
