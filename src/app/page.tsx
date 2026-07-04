@@ -1,33 +1,16 @@
-import Link from "next/link";
-import { brand, landing, CONTACT_EMAIL, IG_URL } from "@/content";
+import { brand, landing } from "@/content";
 import { CollageBackdrop } from "./components/CollageBackdrop";
+import { NavPills } from "./components/NavPills";
 import { RotatingWord } from "./components/RotatingWord";
+import { SiteFooter } from "./components/SiteFooter";
 
 export default function Home() {
   return (
     <main className="grain relative flex min-h-dvh flex-col overflow-hidden">
       <CollageBackdrop />
 
-      <nav className="relative z-20 flex items-center justify-end gap-2 px-5 pt-5 sm:px-8">
-        {landing.navLinks.map((link) =>
-          link.href.startsWith("/") ? (
-            <Link
-              key={link.label}
-              href={link.href}
-              className="rounded-full border border-ink/20 bg-cream-soft/70 px-3.5 py-1.5 text-xs backdrop-blur-sm transition hover:border-rust hover:text-rust"
-            >
-              {link.label}
-            </Link>
-          ) : (
-            <a
-              key={link.label}
-              href={link.href}
-              className="rounded-full border border-ink/20 bg-cream-soft/70 px-3.5 py-1.5 text-xs backdrop-blur-sm transition hover:border-rust hover:text-rust"
-            >
-              {link.label}
-            </a>
-          ),
-        )}
+      <nav className="relative z-20 flex items-center justify-end px-5 pt-5 sm:px-8">
+        <NavPills />
       </nav>
 
       <section className="relative z-20 flex flex-1 flex-col items-center justify-center px-5 py-14 text-center sm:px-8">
@@ -74,15 +57,7 @@ export default function Home() {
         </a>
       </section>
 
-      <footer className="relative z-20 flex items-center justify-center gap-3 px-5 pb-6 text-xs text-ink-soft">
-        <a href={IG_URL} className="transition hover:text-rust">
-          instagram
-        </a>
-        <span aria-hidden>·</span>
-        <a href={`mailto:${CONTACT_EMAIL}`} className="transition hover:text-rust">
-          {CONTACT_EMAIL}
-        </a>
-      </footer>
+      <SiteFooter />
     </main>
   );
 }
