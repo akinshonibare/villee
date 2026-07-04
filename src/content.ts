@@ -115,21 +115,21 @@ export const events = {
   sub: "the first bbq was 40 people. the last one was 120. the next one is yours.",
   past: [
     {
-      title: "summer bbq vol. 02",
-      meta: "toronto · jun",
-      caption: "120 people, one park, zero strangers by sundown.",
-      photo: "/collage/villee-17.jpg",
-    },
-    {
-      title: "sunday supper",
-      meta: "toronto · may",
-      caption: "a long table, candles, and a shared playlist.",
+      title: "summer bbq vol. 01",
+      meta: "toronto",
+      caption: "the first one — 40 of us, mostly strangers.",
       photo: "/collage/villee-01.jpg",
     },
     {
-      title: "first run club",
-      meta: "toronto · apr",
-      caption: "5k, then coffee, then breakfast that lasted three hours.",
+      title: "summer bbq vol. 02",
+      meta: "toronto",
+      caption: "back for more, plus everyone's friends.",
+      photo: "/collage/villee-17.jpg",
+    },
+    {
+      title: "summer bbq vol. 03",
+      meta: "toronto",
+      caption: "120 deep, one rooftop, zero strangers by sundown.",
       photo: "/collage/villee-28.jpg",
     },
   ],
