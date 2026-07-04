@@ -5,11 +5,11 @@ import { useEffect, useRef, useState } from "react";
 
 // Faded patchwork of real event photos behind the landing hero,
 // washed out under cream so the type stays readable (blind8-style).
-// 28 tiles drawn from 33 photos — no photo appears twice at once;
-// every second one tile crossfades to a photo from the bench.
+// 32 tiles drawn from 33 photos — the densest wall the no-repeat rule
+// allows; every second one tile crossfades to the benched photo.
 const PHOTO_COUNT = 33;
-const TILE_COUNT = 28;
-const SIZES = "(max-width: 640px) 25vw, (max-width: 1024px) 20vw, 15vw";
+const TILE_COUNT = 32;
+const SIZES = "(max-width: 640px) 25vw, (max-width: 1024px) 20vw, 13vw";
 
 // One tile swaps per tick — a swap every ~1.1s keeps the wall constantly
 // moving while each individual crossfade still gets room to breathe.
@@ -111,7 +111,7 @@ export function CollageBackdrop() {
 
   return (
     <div aria-hidden className="absolute inset-0 overflow-hidden select-none">
-      <div className="grid w-[104%] -translate-x-[2%] -translate-y-[2%] grid-cols-4 gap-1.5 p-1.5 sm:grid-cols-5 lg:grid-cols-7">
+      <div className="grid w-[104%] -translate-x-[2%] -translate-y-[2%] grid-cols-4 gap-1.5 p-1.5 sm:grid-cols-5 lg:grid-cols-8">
         {tiles.map((tile, i) => (
           <div
             key={i}
