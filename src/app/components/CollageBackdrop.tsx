@@ -68,8 +68,18 @@ export function CollageBackdrop() {
   const [warmCache, setWarmCache] = useState(false);
 
   useEffect(() => {
-    const t = setTimeout(() => setWarmCache(true), 1500);
-    return () => clearTimeout(t);
+    // Wait for the page (visible tiles included) to finish loading before
+    // fetching benched photos — they'd compete for bandwidth on first visit.
+    let t: ReturnType<typeof setTimeout>;
+    const arm = () => {
+      t = setTimeout(() => setWarmCache(true), 1000);
+    };
+    if (document.readyState === "complete") arm();
+    else window.addEventListener("load", arm, { once: true });
+    return () => {
+      window.removeEventListener("load", arm);
+      clearTimeout(t);
+    };
   }, []);
 
   useEffect(() => {
@@ -122,8 +132,8 @@ export function CollageBackdrop() {
           </div>
         ))}
       </div>
-      <div className="absolute inset-0 bg-cream/75" />
-      <div className="absolute inset-0 bg-gradient-to-b from-cream/60 via-cream/20 to-cream/70" />
+      <div className="absolute inset-0 bg-cream/60" />
+      <div className="absolute inset-0 bg-gradient-to-b from-cream/50 via-cream/10 to-cream/60" />
       {warmCache && (
         <div className="pointer-events-none absolute h-px w-px overflow-hidden opacity-0">
           {PHOTOS.map((src) => (
