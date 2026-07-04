@@ -72,6 +72,7 @@ function PhotoLayer({ src }: { src: string }) {
       alt=""
       fill
       sizes={SIZES}
+      loading="eager"
       onLoad={() => setLoaded(true)}
       className={`object-cover transition-opacity duration-700 ease-out ${
         loaded ? "opacity-100" : "opacity-0"
